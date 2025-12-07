@@ -100,15 +100,29 @@
             font-weight: bold;
             margin-top: 5px;
         }
-        #resultDisplay {
+        #resultDisplay, #expiredDisplay {
             margin-top: 20px;
-            padding: 15px;
-            border: 2px solid #28a745;
-            background-color: #e6ffed;
+            padding: 20px;
             border-radius: 8px;
             font-size: 1.1em;
             text-align: center;
             display: none; /* Hidden initially */
+        }
+        #resultDisplay {
+             border: 2px solid #28a745;
+             background-color: #e6ffed;
+        }
+        #expiredDisplay {
+             border: 2px solid #d9534f;
+             background-color: #ffcccc;
+             color: #d9534f;
+             font-weight: bold;
+             font-size: 1.3em;
+        }
+        #submittedScore {
+            font-size: 1.8em;
+            color: #007bff;
+            font-weight: bold;
         }
     </style>
 </head>
@@ -192,7 +206,7 @@
                 <div class="option-group">
                     <label><input type="radio" name="q6" value="A" required> A) SFU (Switch Fuse Unit)</label>
                     <label><input type="radio" name="q6" value="B"> B) ELCB (Earth Leakage Circuit Breaker)</label>
-                    <label><input type="radio" name="q6" value="C"> C) MLCB (This is typically an MCB or MCCB)</label>
+                    <label><input type="radio" name="q6" value="C"> C) MLCB</label>
                     <label><input type="radio" name="q6" value="D"> D) MCCB (Moulded Case Circuit Breaker)</label>
                 </div>
             </div>
@@ -241,10 +255,18 @@
         <input type="submit" value="Final Submit" id="submitButton">
     </form>
 
-    <div id="resultDisplay" style="display: none;">
+    <div id="resultDisplay">
         <p>✅ **Assessment Completed!**</p>
         <p>Roll No.: <span id="submittedRollNo"></span></p>
+        <p>Your Score is:</p>
+        <p><span id="submittedScore"></span> / 10</p>
         <p>Thank you for taking the examination.</p>
+    </div>
+
+    <div id="expiredDisplay">
+        <p>⚠️ **Your Exam Session Expired**</p>
+        <p>This Roll Number has already submitted the examination.</p>
+        <p>Request **Nagarjuna Sir** For Exam Session Revalidation.</p>
     </div>
 </div>
 
@@ -256,70 +278,114 @@
         const rollNoInput = document.getElementById('rollNo');
         const errorRollNo = document.getElementById('errorRollNo');
         const resultDisplay = document.getElementById('resultDisplay');
+        const expiredDisplay = document.getElementById('expiredDisplay');
         const submittedRollNoSpan = document.getElementById('submittedRollNo');
+        const submittedScoreSpan = document.getElementById('submittedScore');
         
-        // Time limit set to 10 minutes (600 seconds)
+        // --- Configuration ---
         const totalTimeMinutes = 10;
         let timeRemaining = totalTimeMinutes * 60; 
         let timerInterval;
 
-        // --- Validation Function: Checks for alphanumeric only ---
-        const validateRollNo = () => {
-            const rollNoValue = rollNoInput.value;
-            // Regex to allow only alphanumeric characters
-            const alphanumericRegex = /^[a-zA-Z0-9]+$/; 
-
-            if (!rollNoValue) {
-                errorRollNo.textContent = "Roll No. is required.";
-                return false;
-            } else if (!alphanumericRegex.test(rollNoValue)) {
-                errorRollNo.textContent = "Error: Roll No. must contain only letters and numbers (alphanumeric).";
-                return false;
-            } else {
-                errorRollNo.textContent = "";
-                return true;
-            }
+        // Define correct answers for scoring (Q[number]: Answer_Option)
+        const CORRECT_ANSWERS = {
+            q1: 'C', q2: 'C', q3: 'C', q4: 'D', q5: 'A',
+            q6: 'B', q7: 'B', q8: 'D', q9: 'B', q10: 'C'
         };
 
-        // Validate Roll No. on input change
-        rollNoInput.addEventListener('input', validateRollNo);
+        // --- Core Functions ---
 
-
-        // --- Submission Logic ---
+        // Function to disable all form elements
         const disableForm = (message, color = '#d9534f') => {
+            clearInterval(timerInterval); // Stop the timer
             const inputs = form.querySelectorAll('input, select, textarea, button');
             inputs.forEach(input => input.disabled = true);
             submitButton.value = message;
             submitButton.style.backgroundColor = color;
             submitButton.disabled = true;
-            clearInterval(timerInterval); // Stop the timer
+        };
+        
+        // Function to check if Roll No. has already submitted (simulated expiry)
+        const checkExistingSubmission = (rollNo) => {
+            // Check if the Roll No. exists in local storage
+            const submittedRolls = JSON.parse(localStorage.getItem('submittedRolls')) || [];
+            return submittedRolls.includes(rollNo);
+        };
+
+        // Display the expired message
+        const showExpired = () => {
+            form.style.display = 'none';
+            timerDisplay.closest('.timer-box').style.display = 'none';
+            expiredDisplay.style.display = 'block';
+            disableForm("Session Expired");
+        };
+
+        // Roll Number Validation and Expiry Check on input
+        const validateAndCheckRollNo = (event) => {
+            const rollNoValue = rollNoInput.value.toUpperCase();
+            const alphanumericRegex = /^[a-zA-Z0-9]+$/; 
+            
+            errorRollNo.textContent = "";
+
+            if (!rollNoValue) {
+                // Do nothing if empty, let 'required' handle it on submit
+                return false; 
+            } else if (!alphanumericRegex.test(rollNoValue)) {
+                errorRollNo.textContent = "Error: Roll No. must contain only letters and numbers (alphanumeric).";
+                return false;
+            } else if (checkExistingSubmission(rollNoValue)) {
+                // If roll number is valid AND already submitted, show expired screen
+                showExpired();
+                return false; 
+            }
+            
+            return true;
+        };
+
+        // --- Submission & Scoring Logic ---
+        const calculateScore = (formData) => {
+            let score = 0;
+            for (const question in CORRECT_ANSWERS) {
+                // Use a standard name convention (q1, q2, ...)
+                const studentAnswer = formData.get(question);
+                if (studentAnswer && studentAnswer === CORRECT_ANSWERS[question]) {
+                    score++;
+                }
+            }
+            return score;
         };
 
         const handleSubmit = (event) => {
             if (event) event.preventDefault();
             
-            // Re-validate just before submission
-            if (!validateRollNo()) {
-                alert("Please correct your Roll No. before submitting.");
+            const rollNo = rollNoInput.value.toUpperCase();
+            
+            // Final validation check
+            if (!validateAndCheckRollNo(null)) {
+                alert("Please correct your Roll No. or contact the administrator if your session is expired.");
                 return;
             }
 
-            // 1. Collect Data (Simulated submission - data remains in browser console)
-            const rollNo = rollNoInput.value;
+            // 1. Calculate Score
+            const formData = new FormData(form);
+            const score = calculateScore(formData);
             
-            console.log(`Assessment Submitted by Roll No: ${rollNo}`);
-            
-            // 2. Display the result and submitted Roll No.
-            submittedRollNoSpan.textContent = rollNo;
-            form.style.display = 'none'; // Hide the form
-            resultDisplay.style.display = 'block'; // Show the success message
+            // 2. Mark Roll No. as submitted in local storage
+            const submittedRolls = JSON.parse(localStorage.getItem('submittedRolls')) || [];
+            if (!submittedRolls.includes(rollNo)) {
+                submittedRolls.push(rollNo);
+                localStorage.setItem('submittedRolls', JSON.stringify(submittedRolls));
+            }
 
-            // 3. Disable form
+            // 3. Display Results
+            submittedRollNoSpan.textContent = rollNo;
+            submittedScoreSpan.textContent = score;
+            form.style.display = 'none';
+            timerDisplay.closest('.timer-box').style.display = 'none';
+            resultDisplay.style.display = 'block';
+
+            // 4. Disable form
             disableForm("Assessment Submitted Successfully!", '#28a745');
-            
-            // NOTE FOR ADMINISTRATOR: In a real exam, you would replace the above steps 
-            // with a fetch() or XMLHttpRequest call to send the Roll No. and answers 
-            // to a server-side script for storage.
         };
 
         // --- Timer Logic ---
@@ -328,32 +394,31 @@
                 const minutes = Math.floor(timeRemaining / 60);
                 const seconds = timeRemaining % 60;
 
-                // Format time as MM:SS
-                const formattedTime = 
-                    (minutes < 10 ? '0' : '') + minutes + ':' + 
-                    (seconds < 10 ? '0' : '') + seconds;
-                
+                const formattedTime = (minutes < 10 ? '0' : '') + minutes + ':' + (seconds < 10 ? '0' : '') + seconds;
                 timerDisplay.textContent = formattedTime;
 
-                if (timeRemaining <= 120) { // Highlight red for last 2 minutes (120 seconds)
-                    const timerBox = timerDisplay.closest('.timer-box');
-                    timerBox.style.backgroundColor = '#ffc0c0';
-                    timerBox.style.borderColor = '#d9534f';
+                if (timeRemaining <= 120) { // Last 2 minutes highlight
+                    timerDisplay.closest('.timer-box').style.backgroundColor = '#ffc0c0';
                 }
 
                 if (timeRemaining <= 0) {
-                    // Time's up! Auto-submit
                     clearInterval(timerInterval);
                     timerDisplay.textContent = "00:00";
                     alert("Time is up! The assessment will now auto-submit.");
-                    handleSubmit(); // Auto-submit the form
+                    handleSubmit();
                     disableForm("Time Over. Auto-Submitted.");
                     return;
                 }
 
                 timeRemaining--;
-            }, 1000); // Update every 1 second
+            }, 1000);
         };
+
+        // --- Initialization ---
+        
+        // Initial check and setup for rollNo input
+        rollNoInput.addEventListener('input', validateAndCheckRollNo);
+        rollNoInput.addEventListener('blur', validateAndCheckRollNo); // Check on unfocus
 
         // Event Listeners
         form.addEventListener('submit', handleSubmit);
