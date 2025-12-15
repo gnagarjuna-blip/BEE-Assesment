@@ -92,6 +92,40 @@
             margin-top: 0; 
             color: #007bff;
         }
+
+        /* Styling for the two buttons/links */
+        .button-group {
+            display: flex;
+            justify-content: space-between;
+            margin: 15px 0;
+        }
+        .button-group a {
+            display: block;
+            width: 48%; /* Takes up half the space */
+            padding: 10px 5px;
+            text-align: center;
+            font-weight: bold;
+            text-decoration: none;
+            border-radius: 4px;
+            font-size: 1.0em;
+            transition: background-color 0.3s;
+        }
+        .btn-working {
+            background-color: #28a745; /* Green */
+            color: white;
+            border: 1px solid #218838;
+        }
+        .btn-video {
+            background-color: #dc3545; /* Red */
+            color: white;
+            border: 1px solid #c82333;
+        }
+        .btn-working:hover {
+            background-color: #218838;
+        }
+        .btn-video:hover {
+            background-color: #c82333;
+        }
     </style>
 </head>
 <body>
@@ -109,11 +143,16 @@
         
         <div class="answer-content">
             
-            <h3>Transformer Working Principle:</h3>
+            <div class="button-group">
+                <a href="#working-principle-section" class="btn-working">Working of Transformer</a>
+                <a href="#animation-video-section" class="btn-video">Animation Video</a>
+            </div>
+            
+            <h3 id="working-principle-section">Transformer Working Principle:</h3>
             <p>A transformer operates on the principle of **mutual induction**, transferring electrical energy between circuits while changing voltage levels, as illustrated in the diagram below.</p>
             
             <div class="image-container">
-                <img src="image_1b0e38.jpg" alt="Diagram showing the core, primary, secondary windings, voltage source, and alternating flux (Φm) of a transformer.">
+                <img src="image_1b0e38.jpg" alt="Diagram showing the core, primary, secondary windings, voltage source, and alternating flux (Phi_m) of a transformer.">
                 <p style="font-size: 0.9em; color: #555;">Figure: Basic Construction and Principle of Transformer</p>
             </div>
             
@@ -121,13 +160,13 @@
             
             <h4>Here’s how it works:</h4>
             <ul>
-                <li>**Primary Winding:** When an alternating current (AC) flows through the primary winding, it generates a changing magnetic field around it. This magnetic field creates a magnetic flux that passes through the core of the transformer.</li>
-                <li>**Core:** The core is typically made of **laminated silicon steel**, which provides a **low reluctance path** for the magnetic flux, enhancing the efficiency of the transformer by minimizing energy losses due to eddy currents.</li>
-                <li>**Secondary Winding:** The changing magnetic flux in the core links with the secondary winding. According to **Faraday's Law of Electromagnetic Induction**, this changing flux induces an electromotive force (EMF) in the secondary winding.</li>
+                <li>**Primary Winding:** When an alternating current (AC) flows through the primary winding, it generates a changing magnetic field around it. This magnetic field creates a magnetic flux ($\Phi$) that passes through the core of the transformer.</li>
+                <li>**Core:** The core is typically made of **laminated silicon steel**, which provides a **low reluctance path** for the magnetic flux ($\Phi$), enhancing the efficiency of the transformer by minimizing energy losses due to eddy currents.</li>
+                <li>**Secondary Winding:** The changing magnetic flux ($\Phi$) in the core links with the secondary winding. According to **Faraday's Law of Electromagnetic Induction**, this changing flux induces an electromotive force (EMF) in the secondary winding.</li>
                 <li>**Voltage Transformation:** The voltage induced in the secondary winding depends on the **turns ratio** between the primary ($N_1$) and secondary ($N_2$) windings. If the secondary winding has more turns ($N_2 > N_1$), the transformer is a **step-up transformer**, increasing the voltage. Conversely, if the primary has more turns ($N_1 > N_2$), it is a **step-down transformer**, decreasing the voltage.</li>
             </ul>
             
-            <p class="animation-header">Animation Video: How Transformers work explained animation (Click to Play)</p>
+            <h3 id="animation-video-section" class="animation-header">Animation Video: How Transformers work explained animation (Click to Play)</h3>
             <div class="video-container">
                 <iframe 
                     src="https://www.youtube.com/embed/86gkhV00Tos?rel=0&autoplay=0" 
