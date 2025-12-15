@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BEE/IEE Part-A Q&A</title>
+    <title>Transformer Working Principle</title>
     <style>
         /* CSS for mobile-friendly view */
         body {
@@ -14,7 +14,7 @@
         }
         .container {
             width: 95%;
-            max-width: 800px; /* Increased max-width for better display */
+            max-width: 800px;
             margin: 20px auto;
             padding: 20px;
             background-color: #fff;
@@ -31,7 +31,7 @@
             color: #007bff;
         }
         
-        /* New Styles for Interactive Q&A */
+        /* New Styles for Q&A */
         .qa-section {
             margin-bottom: 30px;
             padding: 15px;
@@ -39,73 +39,33 @@
             border-radius: 6px;
             background-color: #fafafa;
         }
-        .qa-section h2 {
+
+        .question h2 {
             border-bottom: 1px solid #ccc;
             padding-bottom: 10px;
             margin-top: 0;
-            color: #28a745; /* Changed color for visual distinction */
-        }
-
-        /* Details/Summary for Accordion Effect */
-        details {
-            border: 1px solid #eee;
-            margin-bottom: 10px;
-            border-radius: 4px;
-            background-color: #fff;
-        }
-
-        summary {
-            padding: 15px;
-            font-weight: bold;
-            font-size: 1.05em;
-            cursor: pointer;
-            outline: none;
-            background-color: #e9f5ff; /* Light background for question */
-            border-bottom: 1px solid #e0e0e0;
-            user-select: none; /* Prevent text selection on click */
-            display: block; /* Ensures it takes full width */
-        }
-
-        details[open] summary {
-            background-color: #007bff; /* Blue background when open */
-            color: white;
-            border-bottom: 1px solid #007bff;
+            color: #d9534f;
         }
 
         .answer-content {
             padding: 15px;
-            border-top: 1px solid #e0e0e0;
-            background-color: #ffffff;
             line-height: 1.6;
-        }
-        .answer-content strong {
-            color: #d9534f; /* Highlight important parts of the answer */
-        }
-        .citation {
-            font-size: 0.8em;
-            color: #6c757d;
-            display: block;
-            margin-top: 5px;
-        }
-
-        /* New Style for Animation Button */
-        .animation-button {
-            display: block;
-            width: 100%;
-            padding: 10px 0;
-            margin: 15px 0;
-            background-color: #dc3545; /* Red/Danger color for video */
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            text-decoration: none;
+            background-color: #ffffff;
             border-radius: 4px;
-            font-size: 1.1em;
-            transition: background-color 0.3s;
         }
-        .animation-button:hover {
-            background-color: #c82333;
+        
+        /* Image and Video Styling */
+        .image-container {
+            text-align: center;
+            margin: 20px 0;
         }
+        .image-container img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        
         /* Style for the embedded video player */
         .video-container {
             position: relative;
@@ -115,6 +75,7 @@
             height: 0;
             overflow: hidden;
             margin-bottom: 15px;
+            margin-top: 15px;
         }
         .video-container iframe {
             position: absolute;
@@ -124,134 +85,59 @@
             height: 100%;
             border: none;
         }
+        
+        .animation-header {
+            font-weight: bold; 
+            text-align: center; 
+            margin-top: 0; 
+            color: #007bff;
+        }
     </style>
 </head>
 <body>
 
 <div class="container">
     <header>
-        <h1>BEE/IEE Part-A April 2023 - Interactive Q&A</h1>
-        <p>Click on the question to reveal the answer.</p>
+        <h1>Transformer Working Principle</h1>
+        <p>Detailed explanation and animated video for easy understanding.</p>
     </header>
 
     <div class="qa-section">
-        <h2>Part-A Short Answer Questions</h2>
+        <div class="question">
+            <h2>Question: Explain Working Principle of Transformer?</h2>
+        </div>
         
-        <details open>
-            <summary>2.a) Explain the Working Principle of a Transformer?</summary>
+        <div class="answer-content">
             
-            <div class="answer-content">
-                <p style="font-weight: bold; text-align: center; margin-top: 0;">Watch the Animation Video Below for a Visual Explanation:</p>
-                <div class="video-container">
-                    <iframe 
-                        src="https://www.youtube.com/embed/86gkhV00Tos?rel=0&autoplay=0" 
-                        allowfullscreen
-                        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
-                    </iframe>
-                </div>
-                
-                <h3>Transformer Working Principle:</h3>
-                <p>A transformer is an electrical device that transfers electrical energy between two or more circuits through <strong>electromagnetic induction</strong>. The fundamental principle behind its operation is <strong>mutual induction</strong>, which occurs when a changing magnetic field in one winding induces an EMF in another winding.</p>
-                
-                <p>Here’s how it works:</p>
-                <ul>
-                    <li><strong>Primary Winding:</strong> When an <strong>Alternating Current (AC)</strong> flows through the primary winding, it generates a <strong>changing magnetic field</strong> around it. This magnetic field creates a magnetic flux ($\Phi$) that passes through the core of the transformer.</li>
-                    <li><strong>Core:</strong> The core is typically made of laminated silicon steel, which provides a <strong>low reluctance path</strong> for the magnetic flux, enhancing the efficiency of the transformer.</li>
-                    <li><strong>Secondary Winding:</strong> The changing magnetic flux ($\Phi$) in the core links with the secondary winding. According to <strong>Faraday's Law of Electromagnetic Induction</strong>, this changing flux induces an electromotive force (EMF) in the secondary winding.</li>
-                    <li><strong>Voltage Transformation:</strong> The voltage induced in the secondary winding depends on the <strong>turns ratio</strong> ($N_S/N_P$). If $N_S > N_P$, it is a <strong>step-up transformer</strong> (voltage increases). If $N_S < N_P$, it is a <strong>step-down transformer</strong> (voltage decreases).</li>
-                </ul>
-                <p class="citation">Animation Source: How Transformers work explained animation</p>
+            <h3>Transformer Working Principle:</h3>
+            <p>A transformer operates on the principle of **mutual induction**, transferring electrical energy between circuits while changing voltage levels, as illustrated in the diagram below.</p>
+            
+            <div class="image-container">
+                <img src="image_1b0e38.jpg" alt="Diagram showing the core, primary, secondary windings, voltage source, and alternating flux (Φm) of a transformer.">
+                <p style="font-size: 0.9em; color: #555;">Figure: Basic Construction and Principle of Transformer</p>
             </div>
-        </details>
-        
-        <details>
-            <summary>1.a) What is an ideal voltage source?</summary>
-            <div class="answer-content">
-                <p>An ideal voltage source is a two-terminal source whose voltage remains <strong>constant regardless of the current drawn</strong> from its terminals.</p>
-                <p>It has <strong>zero internal resistance</strong> ($R_i = 0$).</p>
+            
+            <p>A transformer is an electrical device that transfers electrical energy between two or more circuits through electromagnetic induction. The fundamental principle behind its operation is mutual induction, which occurs when a changing magnetic field in one winding induces an EMF in another winding.</p>
+            
+            <h4>Here’s how it works:</h4>
+            <ul>
+                <li>**Primary Winding:** When an alternating current (AC) flows through the primary winding, it generates a changing magnetic field around it. This magnetic field creates a magnetic flux that passes through the core of the transformer.</li>
+                <li>**Core:** The core is typically made of **laminated silicon steel**, which provides a **low reluctance path** for the magnetic flux, enhancing the efficiency of the transformer by minimizing energy losses due to eddy currents.</li>
+                <li>**Secondary Winding:** The changing magnetic flux in the core links with the secondary winding. According to **Faraday's Law of Electromagnetic Induction**, this changing flux induces an electromotive force (EMF) in the secondary winding.</li>
+                <li>**Voltage Transformation:** The voltage induced in the secondary winding depends on the **turns ratio** between the primary ($N_1$) and secondary ($N_2$) windings. If the secondary winding has more turns ($N_2 > N_1$), the transformer is a **step-up transformer**, increasing the voltage. Conversely, if the primary has more turns ($N_1 > N_2$), it is a **step-down transformer**, decreasing the voltage.</li>
+            </ul>
+            
+            <p class="animation-header">Animation Video: How Transformers work explained animation (Click to Play)</p>
+            <div class="video-container">
+                <iframe 
+                    src="https://www.youtube.com/embed/86gkhV00Tos?rel=0&autoplay=0" 
+                    allowfullscreen
+                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share">
+                </iframe>
             </div>
-        </details>
-
-        <details>
-            <summary>1.b) Define KVL (Kirchhoff’s Voltage Law).</summary>
-            <div class="answer-content">
-                <p>Kirchhoff’s Voltage Law (KVL) states that the <strong>algebraic sum of all voltages</strong> (drops and rises) around any closed loop in a circuit <strong>must be zero</strong>.</p>
-                <p>This law is based on the <strong>law of conservation of energy</strong>.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.c) What is active power?</summary>
-            <div class="answer-content">
-                <p>Active power ($P$) is the <strong>actual power consumed by the load</strong> to perform <strong>useful work</strong>.</p>
-                <p>It is measured in <strong>Watts (W)</strong> and represents the real energy transfer in a circuit.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.d) Define the average value of a sinusoidal quantity.</summary>
-            <div class="answer-content">
-                <p>The average value of a sinusoidal quantity over a <strong>half-cycle</strong> is the <strong>arithmetic mean of all instantaneous values</strong> over that period.</p>
-                <p>For a <strong>full cycle</strong>, the average value is <strong>zero</strong>.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.e) What is a step-up transformer?</summary>
-            <div class="answer-content">
-                <p>A step-up transformer <strong>increases the input voltage</strong> from the primary winding to a higher output voltage at the secondary winding.</p>
-                <p>It achieves this by having **fewer turns on the primary** than on the secondary winding.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.f) Define the regulation of a transformer.</summary>
-            <div class="answer-content">
-                <p>Regulation is defined as the <strong>change in the secondary terminal voltage</strong> from <strong>no-load to full-load</strong>.</p>
-                <p>It is expressed as a <strong>percentage of the full-load voltage</strong> and indicates the transformer’s ability to maintain a constant output voltage.</p>
-            </div>
-        </details>
-        
-        <details>
-            <summary>1.g) What type of material is used for the brushes of a d.c machine?</summary>
-            <div class="answer-content">
-                <p><strong>Carbon or Graphite</strong> materials are primarily used for brushes in a d.c. machine.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.h) How many windings are present at the time of starting a single-phase Induction motor?</summary>
-            <div class="answer-content">
-                <p>A single-phase induction motor has **two windings** present at the time of starting:</p>
-                <ul>
-                    <li>The <strong>main (running) winding</strong></li>
-                    <li>The <strong>starting (auxiliary) winding</strong></li>
-                </ul>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.i) What is the full form of M.C.C.B.?</summary>
-            <div class="answer-content">
-                <p>The full form of M.C.C.B. is <strong>Moulded Case Circuit Breaker</strong>.</p>
-            </div>
-        </details>
-
-        <details>
-            <summary>1.j) What is the energy consumed by a 1000 watts heater in 3 hours?</summary>
-            <div class="answer-content">
-                <p>The energy consumed is <strong>3 kWh</strong> (kilowatt-hours).</p>
-                <p class="citation">Calculation: $\text{Energy} = \text{Power} \times \text{Time}$</p>
-                <p class="citation">$$1000 \, \text{W} \times 3 \, \text{h} = 3000 \, \text{Wh} = 3 \, \text{kWh}$$</p>
-            </div>
-        </details>
-
+            
+        </div>
     </div>
-    
-    <div class="qa-section" style="text-align: center; border-style: dashed;">
-        <p>End of Part-A Questions</p>
-    </div>
-
 </div>
 
 </body>
